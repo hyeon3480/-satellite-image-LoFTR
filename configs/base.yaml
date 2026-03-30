@@ -1,0 +1,94 @@
+# ============================================================
+# Satellite Image Dataset Collection Pipeline - Base Configuration
+# ============================================================
+# Common settings shared across all run modes.
+# Per-mode overrides go in configs/modes/ directory.
+
+# === AOI (Area of Interest) ===
+aoi:
+  name: "south_korea"
+  source: "bbox"
+  bbox: [124.5, 33.0, 132.0, 38.9]
+  mgrs_processing: true
+
+# === Temporal Range ===
+temporal:
+  year: 2023
+  date_range: ["2023-01-01", "2023-12-31"]
+  seasons:
+    spring: ["03-01", "05-31"]
+    summer: ["06-01", "08-31"]
+    autumn: ["09-01", "11-30"]
+    winter: ["12-01", "02-28"]
+
+# === Sensor ===
+sensor:
+  collection: "COPERNICUS/S2_SR_HARMONIZED"
+  bands: ["B4", "B3", "B2"]
+  band_aliases: ["red", "green", "blue"]
+  resolution_m: 10
+  scale_factor: 0.0001
+
+# === Sampling ===
+sampling:
+  grid_spacing_m: 5000
+  target_per_class: 200
+  preferred_classes:
+    - "trees"
+    - "crops"
+    - "built"
+    - "water"
+    - "grass"
+  purity_thresholds:
+    strict: 0.7
+    broad: 0.4
+  dw_collection: "GOOGLE/DYNAMICWORLD/V1"
+  dw_temporal_match: "nearest"
+  dw_temporal_buffer_days: 30
+  dw_class_mapping:
+    0: "water"
+    1: "trees"
+    2: "grass"
+    3: "flooded_vegetation"
+    4: "crops"
+    5: "shrub_and_scrub"
+    6: "built"
+    7: "bare"
+    8: "snow_and_ice"
+
+# === Scene Filtering ===
+scene_filter:
+  max_cloud_percent: 20
+  min_valid_pixel_ratio: 0.95
+
+# === Patch ===
+patch:
+  size_pixels: 256
+  export_format: "png"
+
+# === Quality ===
+quality:
+  max_cloud_ratio_patch: 0.05
+  max_nodata_ratio: 0.0
+  cloud_product: "GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED"
+  cloud_band: "cs"
+  cloud_threshold: 0.6
+
+# === Export ===
+export:
+  method: "compute_pixels"
+  drive_folder: "GEE_Export"
+  local_root: "Z:\\Lab_members\\변상현\\GEE_Dataset_copilot"
+  include_metadata: true
+  metadata_format: "json"
+
+# === Run ===
+run:
+  output_root: "Z:\\Lab_members\\변상현\\GEE_Dataset_copilot\\runs"
+  allow_resume: true
+  log_level: "INFO"
+
+# === GEE ===
+gee:
+  project: "ee-hyeon34800"
+  max_concurrent_tasks: 20

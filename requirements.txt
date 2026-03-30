@@ -1,0 +1,3 @@
+pyyaml>=6.0
+earthengine-api>=0.1.370
+pytest>=7.0

@@ -1,0 +1,25 @@
+# ============================================================
+# Smoke Test Mode - Small-scale validation override
+# ============================================================
+# Overrides base.yaml for quick pipeline verification
+# using a small AOI near Seoul with minimal sample counts.
+
+aoi:
+  name: "seoul_test"
+  bbox: [126.8, 37.4, 127.2, 37.7]
+
+sampling:
+  grid_spacing_m: 10000
+  target_per_class: 5
+
+scene_filter:
+  max_cloud_percent: 30
+
+quality:
+  max_nodata_ratio: 0.02
+
+export:
+  method: "compute_pixels"
+
+run:
+  log_level: "DEBUG"
